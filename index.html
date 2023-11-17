@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta content="IE=edge" http-equiv="X-UA-Compatible">
+  <meta content="width=device-width,initial-scale=1.0" name="viewport">
+  <meta content="tistory HTML 편집기" name="title"/>
+  <title>tistory HTML 편집기</title>
+</head>
+
+<body style="margin: 0">
+<div style="display: inline-block; height: 800px; width: 48%">
+  <label for="before" style="display: block">before</label>
+  <textarea id="before" style="height: 100%; width: 100%"></textarea>
+</div>
+<div style="display: inline-block; height: 800px; width: 48%; margin-left: 1%">
+  <label for="after" style="display: block">after</label>
+  <textarea id="after" style="height: 100%; width: 100%"></textarea>
+</div>
+<button type="button" onclick="formatHTML()" style="height: 50px; width: 99%">format HTML</button>
+<div id="html-block" style="display: none"></div>
+
+<script>
+  const formatHTML = () => {
+    const before = document.getElementById('before');
+    const after = document.getElementById('after');
+
+    const htmlBlock = document.getElementById('html-block');
+    // mac OS 백스페이스 문자 제거
+    htmlBlock.innerHTML = before.value.replaceAll('', '');
+
+    clean(htmlBlock);
+
+    after.value = htmlBlock.innerHTML;
+  }
+
+  const clean = tag => {
+    // 링크 url 출력 decode
+    if (tag.tagName === 'A' && tag.children.length === 0) {
+      tag.innerText = decodeURI(tag.innerText);
+    }
+
+    // style 속성 제거
+    tag.style.removeProperty('color');
+    tag.style.removeProperty('background-color');
+    if (tag.style.length === 0) {
+      tag.removeAttribute('style');
+    }
+
+    for (let i = 0; i < tag.children.length; i++) {
+      clean(tag.children[i]);
+    }
+  }
+</script>
+</body>
+</html>
