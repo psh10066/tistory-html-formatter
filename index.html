@@ -29,12 +29,19 @@
     // mac OS 백스페이스 문자 제거
     htmlBlock.innerHTML = before.value.replaceAll('', '');
 
+    // 중복 공백 제거
+    htmlBlock.innerHTML = htmlBlock.innerHTML.replaceAll('&nbsp;', ' ');
+
     clean(htmlBlock);
 
     after.value = htmlBlock.innerHTML;
   }
 
   const clean = tag => {
+    for (let i = tag.children.length - 1; i >= 0; i--) {
+      clean(tag.children[i]);
+    }
+
     // 링크 url 출력 decode
     if (tag.tagName === 'A' && tag.children.length === 0) {
       tag.innerText = decodeURI(tag.innerText);
@@ -43,12 +50,14 @@
     // style 속성 제거
     tag.style.removeProperty('color');
     tag.style.removeProperty('background-color');
+    tag.style.removeProperty('text-align');
     if (tag.style.length === 0) {
       tag.removeAttribute('style');
-    }
 
-    for (let i = 0; i < tag.children.length; i++) {
-      clean(tag.children[i]);
+      // 불필요 span 태그 제거
+      if (tag.tagName === 'SPAN') {
+        tag.outerHTML = tag.innerHTML;
+      }
     }
   }
 </script>
