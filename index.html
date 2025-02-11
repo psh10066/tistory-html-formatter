@@ -28,6 +28,7 @@
     const htmlBlock = document.getElementById('html-block');
     // mac OS 백스페이스 문자 제거
     htmlBlock.innerHTML = before.value.replaceAll('', '');
+    htmlBlock.innerHTML = htmlBlock.innerHTML.replaceAll('', '');
 
     // 중복 공백 제거
     htmlBlock.innerHTML = htmlBlock.innerHTML.replaceAll('&nbsp;', ' ');
