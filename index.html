@@ -23,18 +23,20 @@
 <script>
   const formatHTML = () => {
     const before = document.getElementById('before');
-    const after = document.getElementById('after');
+    let html = before.value;
 
-    const htmlBlock = document.getElementById('html-block');
     // mac OS 백스페이스 문자 제거
-    htmlBlock.innerHTML = before.value.replaceAll('', '');
-    htmlBlock.innerHTML = htmlBlock.innerHTML.replaceAll('', '');
+    html = html.replaceAll('', '');
+    html = html.replaceAll('', '');
 
     // 중복 공백 제거
-    htmlBlock.innerHTML = htmlBlock.innerHTML.replaceAll('&nbsp;', ' ');
+    html = html.replaceAll('&nbsp;', ' ');
 
+    const htmlBlock = document.getElementById('html-block');
+    htmlBlock.innerHTML = html;
     clean(htmlBlock);
 
+    const after = document.getElementById('after');
     after.value = htmlBlock.innerHTML;
   }
 
